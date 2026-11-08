@@ -1,0 +1,48 @@
+
+export const sampleWords = [
+  {
+    id: "word_001",
+    word: "Curious",
+    meaning: "Wanting to learn or know more about something.",
+    example: "The curious child asked many questions.",
+    gapSentence: "The ___ child asked many questions.",
+    spellingHint: "C _ R I O U S",
+    difficulty: "easy",
+  },
+  {
+    id: "word_002",
+    word: "Brave",
+    meaning: "Ready to face something difficult or frightening.",
+    example: "The brave girl spoke in front of her class.",
+    gapSentence: "The ___ girl spoke in front of her class.",
+    spellingHint: "B _ A V E",
+    difficulty: "easy",
+  },
+  {
+    id: "word_003",
+    word: "Gentle",
+    meaning: "Kind, calm, and careful with others.",
+    example: "He was gentle when holding the little kitten.",
+    gapSentence: "He was ___ when holding the little kitten.",
+    spellingHint: "G E _ T L E",
+    difficulty: "easy",
+  },
+  {
+    id: "word_004",
+    word: "Discover",
+    meaning: "To find or learn something for the first time.",
+    example: "We hope to discover new things at the museum.",
+    gapSentence: "We hope to ___ new things at the museum.",
+    spellingHint: "D I S _ O V E R",
+    difficulty: "medium",
+  },
+  {
+    id: "word_005",
+    word: "Imagine",
+    meaning: "To create a picture or idea in your mind.",
+    example: "Imagine a world filled with colorful butterflies.",
+    gapSentence: "___ a world filled with colorful butterflies.",
+    spellingHint: "I M _ G I N E",
+    difficulty: "easy",
+  },
+];
