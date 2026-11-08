@@ -37,12 +37,12 @@ const features = [
 
 export default function Welcome() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#F8F7FF]">
+    <div className="min-h-screen overflow-x-hidden bg-[#f9fff7]">
       <Navbar />
 
       <main>
         <section className="relative flex min-h-[82vh] items-center justify-center overflow-hidden px-5 py-20">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-100 via-purple-50 to-pink-100" />
+          <div className="absolute inset-0 bg-gradient-to-br from-green-100 via-green-50 to-gray-100" />
 
           <AnimatedWords />
 
