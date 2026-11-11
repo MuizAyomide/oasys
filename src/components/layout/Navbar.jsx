@@ -8,7 +8,8 @@ export default function Navbar() {
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 md:px-10">
         <Link to="/" className="flex items-center gap-3">
           <div className="rounded-2xl bg-indigo-600 p-3 text-white shadow-md">
-            <BookOpen size={26} />
+            {/* <BookOpen size={26} /> */}
+           <p className="font-bold"> OA</p>
           </div>
 
           <div>

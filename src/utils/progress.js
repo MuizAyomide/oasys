@@ -4,7 +4,6 @@ const STORAGE_KEY = "oasys_challenge_progress_v1";
 export function getProgress() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-
     if (!saved) return {};
 
     const parsed = JSON.parse(saved);
@@ -24,7 +23,11 @@ export function getProgress() {
   }
 }
 
-export function saveChallengeResult(dateKey, score) {
+export function saveChallengeResult(
+  dateKey,
+  score,
+  gameScores = null
+) {
   if (
     !/^\d{4}-\d{2}-\d{2}$/.test(dateKey) ||
     !Number.isInteger(score) ||
@@ -34,9 +37,29 @@ export function saveChallengeResult(dateKey, score) {
     throw new Error("Invalid challenge result");
   }
 
+  if (gameScores !== null) {
+    const values = [
+      gameScores.matching,
+      gameScores.gap,
+      gameScores.spelling,
+    ];
+
+    if (
+      values.some(
+        (value) =>
+          !Number.isInteger(value) ||
+          value < 0 ||
+          value > 5
+      ) ||
+      values.reduce((sum, value) => sum + value, 0) !== score
+    ) {
+      throw new Error("Invalid game score breakdown");
+    }
+  }
+
   const progress = getProgress();
 
-  // A completed challenge keeps its original score.
+  // Completed days cannot be overwritten.
   if (progress[dateKey]?.completed) {
     return progress;
   }
@@ -44,12 +67,18 @@ export function saveChallengeResult(dateKey, score) {
   progress[dateKey] = {
     completed: true,
     score,
+    gameScores,
     completedAt: new Date().toISOString(),
   };
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(progress)
+  );
 
-  window.dispatchEvent(new Event("oasys-progress-updated"));
+  window.dispatchEvent(
+    new Event("oasys-progress-updated")
+  );
 
   return progress;
 }
@@ -59,14 +88,14 @@ export function getProgressStats(progress) {
     (item) => item?.completed === true
   );
 
-  const totalPoints = completed.reduce(
-    (sum, item) => sum + (Number(item.score) || 0),
-    0
-  );
-
   return {
     completedDays: completed.length,
-    totalPoints,
-    perfectDays: completed.filter((item) => item.score === 15).length,
+    totalPoints: completed.reduce(
+      (sum, item) => sum + (Number(item.score) || 0),
+      0
+    ),
+    perfectDays: completed.filter(
+      (item) => item.score === 15
+    ).length,
   };
 }
