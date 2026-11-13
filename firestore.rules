@@ -1,0 +1,59 @@
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && exists(
+          /databases/$(database)/documents/admins/$(request.auth.uid)
+        )
+        && get(
+          /databases/$(database)/documents/admins/$(request.auth.uid)
+        ).data.role == "admin"
+        && get(
+          /databases/$(database)/documents/admins/$(request.auth.uid)
+        ).data.active == true;
+    }
+
+    // Administrator authorization
+    match /admins/{userId} {
+      allow get: if signedIn()
+        && request.auth.uid == userId;
+
+      allow list, create, update, delete: if false;
+    }
+
+    // Vocabulary records
+    match /vocabulary/{wordId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Scheduled daily vocabulary
+    match /dailyChallenges/{dateId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Questions managed by administrators
+    match /quizQuestions/{questionId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Administrators can read recorded completions.
+    // Students cannot write scores directly.
+    match /challengeResults/{resultId} {
+      allow read: if isAdmin();
+      allow create, update, delete: if false;
+    }
+
+    // Deny every other unrecognized path
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
