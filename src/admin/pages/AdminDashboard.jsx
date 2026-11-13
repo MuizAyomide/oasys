@@ -17,6 +17,7 @@ import {
 import { getDashboardData } from "../../services/dashboardService";
 import { toDateKey, formatFullDate } from "../../utils/date";
 import { useAuth } from "../../context/AuthContext";
+import { getOasysDateKey } from "../../utils/challengeDate";
 
 function StatCard({
   title,
@@ -91,7 +92,7 @@ export default function AdminDashboard() {
 
     try {
       const now = new Date();
-      const dateKey = toDateKey(now);
+      const dateKey = getOasysDateKey(now);
 
       const data = await getDashboardData(dateKey);
 
@@ -224,7 +225,7 @@ export default function AdminDashboard() {
             </h3>
 
             <p className="mt-2 text-sm text-slate-500">
-              Vocabulary assigned for {toDateKey(currentDate)}
+              Vocabulary assigned for {getOasysDateKey(currentDate)}
             </p>
           </div>
 

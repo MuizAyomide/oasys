@@ -17,6 +17,7 @@ import Results from "./pages/Results";
 import AdminLogin from "./admin/pages/AdminLogin";
 import AdminDashboard from "./admin/pages/AdminDashboard";
 import ManageWords from "./admin/pages/ManageWords";
+import DailySchedule from "./admin/pages/DailySchedule";
 
 // Admin components
 import ProtectedRoute from "./admin/components/ProtectedRoute";
@@ -56,10 +57,7 @@ export default function App() {
             <Route
               path="/admin/schedule"
               element={
-                <AdminSectionPlaceholder
-                  title="Daily Schedule"
-                  phase="Phase 5D"
-                />
+                <DailySchedule />
               }
             />
 

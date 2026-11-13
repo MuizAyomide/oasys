@@ -35,9 +35,15 @@ service cloud.firestore {
     }
 
     // Scheduled daily vocabulary
-    match /dailyChallenges/{dateId} {
-      allow read, write: if isAdmin();
-    }
+    
+match /dailyChallenges/{dateId} {
+  // Admin dashboard and scheduler can read assignments.
+  allow read: if isAdmin();
+
+  // All scheduling writes must pass through
+  // the trusted Firebase Cloud Functions.
+  allow create, update, delete: if false;
+}
 
     // Questions managed by administrators
     match /quizQuestions/{questionId} {
