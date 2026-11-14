@@ -18,6 +18,8 @@ import AdminLogin from "./admin/pages/AdminLogin";
 import AdminDashboard from "./admin/pages/AdminDashboard";
 import ManageWords from "./admin/pages/ManageWords";
 import DailySchedule from "./admin/pages/DailySchedule";
+import ManageQuiz from "./admin/pages/ManageQuiz";
+
 
 // Admin components
 import ProtectedRoute from "./admin/components/ProtectedRoute";
@@ -64,10 +66,7 @@ export default function App() {
             <Route
               path="/admin/quizzes"
               element={
-                <AdminSectionPlaceholder
-                  title="Manage Quiz"
-                  phase="Phase 5E"
-                />
+                <ManageQuiz />
               }
             />
 
